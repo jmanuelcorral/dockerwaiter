@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "dockerwaiter": {
+      "commandName": "Project",
+      "commandLineArgs": "-c unittests,platformintegration_tests -d docker-compose.platformintegration.test.yml"
+    }
+  }
+}
