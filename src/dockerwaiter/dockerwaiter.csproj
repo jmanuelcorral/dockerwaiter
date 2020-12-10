@@ -26,13 +26,13 @@
     <PackageReference Include="Docker.DotNet" Version="3.125.4" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\LICENSE">
+    <Folder Include="nupkg\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="nupkg\" />
   </ItemGroup>
 
 </Project>
