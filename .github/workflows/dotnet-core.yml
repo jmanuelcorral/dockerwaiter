@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: dotnet restore ./src/dockerwaiter.sln
+      run: dotnet restore ./src/dockerwaiter/dockerwaiter.csproj
     - name: Build
       run: dotnet build --configuration Release --no-restore ./src/dockerwaiter.sln
     - name: Pack
