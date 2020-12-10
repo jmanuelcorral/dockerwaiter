@@ -2,6 +2,8 @@
 
 A small command line utility for waiting exit codes from multiple containers in a docker-compose scenarios.
 
+![.NET Core](https://github.com/jmanuelcorral/dockerwaiter/workflows/.NET%20Core/badge.svg)
+
 ## Problem
 
 Working with docker-compose scenarios, normally I use docker-compose for launching integration tests in a build pipeline, with this approach, you normally finish your docker-compose scenario when a container exits (for sample, you launch a docker-compose that launch a database, a webserver, and a container that performs E2E tests) If you want to split this "E2E tests containers" you probably won't launch in parallel this tests because you only can exit from docker-compose from one
