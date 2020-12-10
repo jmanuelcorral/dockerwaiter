@@ -22,10 +22,10 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore ./src/dockerwaiter.sln
     - name: Pack
-      run: dotnet pack ./src/dockerwaiter.sln  -o ./dockerwaiter.nupkg
+      run: dotnet pack ./src/dockerwaiter.sln  -o .
     - name: Push
       env:
         API_KEY: ${{ secrets.ApiKey }}
-      run: dotnet nuget push ./dockerwaiter.nupkg -k $API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+      run: dotnet nuget push ./dockerwaiter.*.nupkg -k $API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
 
     
