@@ -10,11 +10,26 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dockerwaiter</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
+    <Authors>jmanuelcorral</Authors>
+    <Company>sidelabs</Company>
+    <Description>A small utility for await multiple containers in a docker-compose waiting to have their exit codes</Description>
+    <PackageProjectUrl>https://github.com/jmanuelcorral/dockerwaiter</PackageProjectUrl>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/jmanuelcorral/dockerwaiter</RepositoryUrl>
+    <PackageTags>docker dotnet commandline utility</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Version>1.0.2</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="ConsoleTables" Version="2.4.2" />
     <PackageReference Include="Docker.DotNet" Version="3.125.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

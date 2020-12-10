@@ -21,6 +21,9 @@ namespace dockerwaiter
         {
             List<string> containersBeingWatched = arguments.ContainersToFilter.ToList();
             bool allContainersExited = false;
+            DisplayArguments(arguments);
+            var containersBeforeLoop = await _containerHelper.GetContainersInDockerComposeFilteredByNames(arguments.DockerCompose, arguments.ContainersToFilter.ToArray());
+            DisplayInConsole("This Containers Will be awaited", containersBeforeLoop);
             try
             {
                 while (!allContainersExited)
@@ -28,21 +31,26 @@ namespace dockerwaiter
                     var containers = await _containerHelper.GetContainersInDockerComposeFilteredByNames(arguments.DockerCompose, containersBeingWatched.ToArray());
                     if (containers.Count() > 0)
                     {
-                        DisplayInConsole("These containers will be awaited", containers);
                         foreach (var container in containers)
                         {
-                            RemoveContainerFromBeingWatchedIfAreExited(container, containersBeingWatched);
+                            var exitcode = RemoveContainerFromBeingWatchedIfAreExited(container, containersBeingWatched);
+                            if (exitcode != 0)
+                            {
+                                await _containerHelper.StopAllContainersInDockerCompose(arguments.DockerCompose);
+                                return exitcode;
+                            }
                         }
                     }
                     else
                     {
                         var containersWillBeRemoved = await _containerHelper.GetContainersInDockerCompose(arguments.DockerCompose);
-                        DisplayInConsole("These containers will be stopped", containersWillBeRemoved);
                         await _containerHelper.StopAllContainersInDockerCompose(arguments.DockerCompose);
                         allContainersExited = true;
                     }
 
                 }
+                var containersAfterLoop = await _containerHelper.GetContainersInDockerComposeFilteredByNames(arguments.DockerCompose, arguments.ContainersToFilter.ToArray());
+                DisplayInConsole("This Containers Will be awaited", containersBeforeLoop);
                 return 0;
             } catch(Exception ex)
             {
@@ -68,10 +76,14 @@ namespace dockerwaiter
             return 0;
         }
 
+        private void DisplayArguments(WaiterArguments arguments)
+        {
+            Console.WriteLine($"Monitoring the containers: { string.Join(',', arguments.ContainersToFilter.ToArray())}");
+            Console.WriteLine($"docker-compose file: {arguments.DockerCompose}");
+        }
 
         private void DisplayInConsole(string title, IEnumerable<ContainerProperties> containers)
         {
-            Console.Clear();
             Console.WriteLine(title);
             ConsoleTable
             .From<ContainerProperties>(containers)

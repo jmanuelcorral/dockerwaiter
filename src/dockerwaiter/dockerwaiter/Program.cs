@@ -8,6 +8,7 @@ using CommandLine;
 using ConsoleTables;
 using Docker.DotNet;
 using Docker.DotNet.Models;
+using dockerwaiter.Containers;
 
 namespace dockerwaiter
 {
@@ -39,7 +40,12 @@ namespace dockerwaiter
             if (task.Wait(TimeSpan.FromSeconds(timeout)))
                 return task.Result;
             else
-                return -1; 
+            {
+                var containerHelper = new ContainerHelper();
+                containerHelper.StopAllContainersInDockerCompose(o.DockerCompose).GetAwaiter().GetResult();
+                Console.WriteLine($"TimeOut of {timeout} Reached");
+                return -1;
+            }
         }
     }
 }
