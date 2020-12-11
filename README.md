@@ -31,6 +31,9 @@ With docker-compose you launch your integration tests, and inside this docker-co
 
 dockerwaiter awaits to all your containers end (with exitcode 0) or breaks your integration testing session if once of them exits without this exit code.
 
+![dockerwaiter terminal sample](https://i.ibb.co/Bw1y7gj/dockerwaiter.gif "dockerwaiter in action")
+
+
 Also you can setup a timeout 😎, by default is one hour.
 
 ## How to install
