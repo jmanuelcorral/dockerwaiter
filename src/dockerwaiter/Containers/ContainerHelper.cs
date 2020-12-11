@@ -27,7 +27,7 @@ namespace dockerwaiter.Containers
         public ContainerHelper(string logPath="")
         {
             if (!string.IsNullOrEmpty(logPath))
-                _logsPath = logPath;
+                _logsPath = Directory.GetDirectoryRoot(logPath);
             if (_isWindowsOS)
             {
                 _client = new DockerClientConfiguration(
