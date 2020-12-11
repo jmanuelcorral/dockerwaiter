@@ -44,4 +44,8 @@ Also you can setup a timeout 😎, by default is one hour.
 > dotnet tool install --global dockerwaiter
 ```
 
+If you don't want or have dotnet tooling, you also can install downloading a valid binary version from [releases](https://github.com/jmanuelcorral/dockerwaiter/releases).
 
+```bash 
+>  curl -o /usr/local/bin/dockerwaiter -sSL https://github.com/jmanuelcorral/dockerwaiter/releases/download/$DOCKERWAITER_VERSION/dockerwaiter-linux64 
+```
