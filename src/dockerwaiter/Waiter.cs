@@ -11,14 +11,14 @@ namespace dockerwaiter
 {
     public class Waiter
     {
-        private readonly ContainerHelper _containerHelper;
+        private ContainerHelper _containerHelper;
         public Waiter()
         {
-            _containerHelper = new ContainerHelper();
         }
 
         public async Task<int> Execute(WaiterArguments arguments)
         {
+            _containerHelper = new ContainerHelper(arguments.LogPath);
             List<string> containersBeingWatched = arguments.ContainersToFilter.ToList();
             bool allContainersExited = false;
             DisplayArguments(arguments);
@@ -50,7 +50,9 @@ namespace dockerwaiter
 
                 }
                 var containersAfterLoop = await _containerHelper.GetContainersInDockerComposeFilteredByNames(arguments.DockerCompose, arguments.ContainersToFilter.ToArray());
+                
                 DisplayInConsole("This Containers Will be awaited", containersBeforeLoop);
+                
                 return 0;
             } catch(Exception ex)
             {
@@ -58,8 +60,6 @@ namespace dockerwaiter
                 await _containerHelper.StopAllContainersInDockerCompose(arguments.DockerCompose);
                 return -1;
             }
-
-            
         }
 
 
