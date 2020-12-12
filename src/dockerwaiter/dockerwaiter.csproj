@@ -18,7 +18,8 @@
     <RepositoryUrl>https://github.com/jmanuelcorral/dockerwaiter</RepositoryUrl>
     <PackageTags>docker dotnet commandline utility</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
+    <PackageReleaseNotes>Now if the logs directory you specify it not exist, It will be created.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />

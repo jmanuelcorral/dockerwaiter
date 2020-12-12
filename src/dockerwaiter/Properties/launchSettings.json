@@ -2,7 +2,7 @@
   "profiles": {
     "dockerwaiter": {
       "commandName": "Project",
-      "commandLineArgs": "-c unittests,platformintegration_tests -d docker-compose.tests.yml"
+      "commandLineArgs": "-c unittests,platformintegration_tests -d docker-compose.tests.yml -l ./logs"
     }
   }
 }

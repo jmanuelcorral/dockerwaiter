@@ -22,12 +22,11 @@ namespace dockerwaiter.Containers
     {
         private readonly bool _isWindowsOS = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private readonly DockerClient _client;
-        private readonly string _logsPath = Directory.GetCurrentDirectory();
+        private readonly string _logsPath;
 
         public ContainerHelper(string logPath="")
         {
-            if (!string.IsNullOrEmpty(logPath))
-                _logsPath = Directory.GetDirectoryRoot(logPath);
+            _logsPath = GenerateLogPath(logPath);
             if (_isWindowsOS)
             {
                 _client = new DockerClientConfiguration(
@@ -40,8 +39,24 @@ namespace dockerwaiter.Containers
                     new Uri("unix:///var/run/docker.sock"))
                      .CreateClient();
             }
+            GenerateLogPath(logPath);
         }
 
+        private string GenerateLogPath(string logPath)
+        {
+            string pathGenerated = "";
+            if (string.IsNullOrWhiteSpace(logPath))
+                pathGenerated = Directory.GetCurrentDirectory();
+            else 
+                if (logPath.StartsWith('.')) //also if directory doesntexist createit
+                    pathGenerated = Path.Join(Directory.GetCurrentDirectory(), logPath);
+                else 
+                    pathGenerated = Path.GetFullPath(logPath);
+
+            if (!Directory.Exists(pathGenerated))
+                Directory.CreateDirectory(pathGenerated);
+            return pathGenerated;
+        }
         public async Task<IEnumerable<ContainerProperties>> GetContainersInDockerCompose(string dockerComposeFilename)
         {
             var containerList = await _client.Containers.ListContainersAsync(
