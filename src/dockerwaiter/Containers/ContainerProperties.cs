@@ -6,6 +6,11 @@ namespace dockerwaiter
 {
     public class ContainerProperties
     {
+
+        public ContainerProperties()
+        {
+        }
+
         public ContainerProperties(ContainerListResponse response)
         {
             ContainerName = response.Names.FirstOrDefault().Replace("/", "");

@@ -34,9 +34,9 @@ namespace dockerwaiter
 
         static int RunOptionsAndReturnExitCode(WaiterArguments o)
         {
-            var waiter = new Waiter();
+            var waiter = new Waiter(o, new ContainerHelper());
             int timeout = (o.Timeout > 0) ? o.Timeout: 3600;
-            var task = Task.Run(() => waiter.Execute(o));
+            var task = Task.Run(() => waiter.Execute());
             if (task.Wait(TimeSpan.FromSeconds(timeout)))
                 return task.Result;
             else

@@ -22,11 +22,10 @@ namespace dockerwaiter.Containers
     {
         private readonly bool _isWindowsOS = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private readonly DockerClient _client;
-        private readonly string _logsPath;
+        private string _logsPath;
 
-        public ContainerHelper(string logPath="")
+        public ContainerHelper()
         {
-            _logsPath = GenerateLogPath(logPath);
             if (_isWindowsOS)
             {
                 _client = new DockerClientConfiguration(
@@ -39,7 +38,11 @@ namespace dockerwaiter.Containers
                     new Uri("unix:///var/run/docker.sock"))
                      .CreateClient();
             }
-            GenerateLogPath(logPath);
+        }
+
+        private void SetLogPath(string logPath)
+        {
+            _logsPath = GenerateLogPath(logPath);
         }
 
         private string GenerateLogPath(string logPath)
