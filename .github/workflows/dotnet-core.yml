@@ -27,5 +27,13 @@ jobs:
       env:
         API_KEY: ${{ secrets.ApiKey }}
       run: dotnet nuget push ./dockerwaiter.*.nupkg -k $API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+    - name: Update Release Draft
+      uses: release-drafter/release-drafter@v5
+      # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
+      # with:
+      #   config-name: my-config.yml
+      #   disable-autolabeler: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     
